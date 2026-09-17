@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>ИС-423</title>
+<meta name="description" content="ИС-423 — 33 человека. Факты, достижения, хроника. Никого не отчислили.">
+<meta name="theme-color" content="#0a0a0b">
+<meta property="og:title" content="ИС-423">
+<meta property="og:description" content="33 человека. 4 года. Никого не отчислили.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --bg:      #0a0a0b;
+  --panel:   #0f0f11;
+  --panel-2: #151517;
+  --text:    #f0efe9;
+  --muted:   #6e6e70;
+  --dim:     #a0a0a2;
+  --line:    rgba(240,239,233,.09);
+  --line-2:  rgba(240,239,233,.16);
+  --accent:  #ff4d1f;
+  --neon:    #00ff9d;
+
+  --f-display: 'Space Grotesk', system-ui, sans-serif;
+  --f-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --f-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --pad:   clamp(1.25rem, 4vw, 4rem);
+  --maxw:  1400px;
+  --ease:  cubic-bezier(.2, .7, .2, 1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--f-body);
+  font-size:16px; line-height:1.6;
+  overflow-x:hidden; min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg,canvas{ display:block; max-width:100%; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+a{ color:inherit; text-decoration:none; }
+::selection{ background:var(--accent); color:var(--bg); }
+
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:var(--bg); }
+::-webkit-scrollbar-thumb{ background:#2a2a2c; }
+::-webkit-scrollbar-thumb:hover{ background:#3a3a3c; }
+
+/* ── ЗВЁЗДНЫЙ ТОННЕЛЬ ── */
+#stars{
+  position:fixed; inset:0; z-index:0;
+  pointer-events:none;
+}
+.vignette{
+  position:fixed; inset:0; z-index:1;
+  pointer-events:none;
+  background:radial-gradient(ellipse at center, transparent 40%, rgba(10,10,11,.85) 100%);
+}
+.noise{
+  position:fixed; inset:0; z-index:2;
+  pointer-events:none; opacity:.04; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── КУРСОРНЫЙ СЛЕД ── */
+.trail{
+  position:fixed; z-index:9999;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent);
+  pointer-events:none;
+  mix-blend-mode:screen;
+  will-change:transform, opacity;
+}
+
+/* ── ПРОГРЕСС ── */
+.progress{
+  position:fixed; top:0; left:0; right:0; height:2px;
+  z-index:200; background:linear-gradient(90deg, var(--accent), var(--neon));
+  transform-origin:0 50%; transform:scaleX(0);
+  will-change:transform;
+  box-shadow:0 0 12px rgba(255,77,31,.6);
+}
+
+/* ── ХЕДЕР ── */
+.header{
+  position:fixed; top:0; left:0; right:0; z-index:150;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem var(--pad);
+  pointer-events:none;
+}
+.header > *{ pointer-events:auto; }
+.logo{
+  font-family:var(--f-display); font-weight:600;
+  font-size:.85rem; letter-spacing:-.01em;
+  display:inline-flex; align-items:baseline; gap:.5rem;
+  transition:color .3s;
+}
+.logo::before{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--accent); display:inline-block; transform:translateY(-1px);
+  animation:pulse 2s ease-in-out infinite;
+}
+.logo:hover{ color:var(--accent); }
+@keyframes pulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(255,77,31,.7); }
+  50%    { box-shadow:0 0 0 8px rgba(255,77,31,0); }
+}
+.header__meta{
+  font-family:var(--f-mono); font-size:.68rem;
+  letter-spacing:.14em; color:var(--muted);
+  margin-right:.9rem; text-transform:uppercase;
+}
+.header__right{ display:flex; align-items:center; gap:.5rem; }
+.fs-btn,.comic-btn{
+  height:34px; padding:0 .8rem; border-radius:8px;
+  border:1px solid var(--line);
+  display:inline-flex; align-items:center; gap:.4rem;
+  color:var(--dim); font-family:var(--f-mono);
+  font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+  transition:border-color .3s, color .3s, background-color .3s;
+}
+.comic-btn{ padding:0 .6rem; }
+.fs-btn:hover,.comic-btn:hover{ color:var(--text); border-color:var(--line-2); background:rgba(255,255,255,.03); }
+.comic-btn.is-on{ color:var(--accent); border-color:var(--accent); }
+.fs-btn svg{ width:14px; height:14px; }
+.fs-btn{ width:34px; padding:0; justify-content:center; }
+
+/* ── ТОЧКИ ── */
+.dots{
+  position:fixed; right:1.25rem; top:50%;
+  transform:translateY(-50%); z-index:150;
+  display:flex; flex-direction:column; gap:.7rem; align-items:flex-end;
+}
+.dot{
+  position:relative; width:24px; height:8px;
+  display:flex; align-items:center; justify-content:flex-end;
+  padding:0;
+}
+.dot::before{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:rgba(240,239,233,.25);
+  transition:width .35s var(--ease), background-color .35s;
+}
+.dot:hover::before{ background:rgba(240,239,233,.6); }
+.dot.is-active::before{ width:22px; border-radius:3px; background:var(--accent); box-shadow:0 0 12px var(--accent); }
+.dot__label{
+  position:absolute; right:130%; top:50%;
+  transform:translateY(-50%) translateX(6px);
+  font-family:var(--f-mono); font-size:.6rem;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); white-space:nowrap;
+  opacity:0; pointer-events:none;
+  transition:opacity .25s, transform .25s var(--ease);
+}
+.dot:hover .dot__label{ opacity:1; transform:translateY(-50%) translateX(0); }
+
+/* ── СЕКЦИИ ── */
+main{ position:relative; z-index:3; }
+.section{
+  position:relative; min-height:100svh;
+  padding:clamp(6rem, 12vh, 10rem) var(--pad) clamp(3rem, 8vh, 6rem);
+  display:flex; flex-direction:column; justify-content:center;
+}
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; }
+
+.section-head{
+  display:flex; flex-direction:column; gap:.75rem;
+  margin-bottom:clamp(2rem, 5vw, 3.5rem);
+  max-width:820px;
+}
+.num{
+  font-family:var(--f-mono); font-size:.66rem;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--muted);
+  display:inline-flex; align-items:center; gap:.8rem;
+}
+.num::after{ content:''; width:40px; height:1px; background:var(--line-2); }
+.section-title{
+  font-family:var(--f-display); font-weight:600;
+  font-size:clamp(1.9rem, 1rem + 3.5vw, 3.6rem);
+  line-height:1.02; letter-spacing:-.035em;
+  max-width:18ch;
+}
+
+[data-reveal]{
+  opacity:0; transform:translateY(24px);
+  transition:opacity .85s var(--ease), transform .85s var(--ease);
+  transition-delay:var(--d, 0s);
+}
+[data-reveal].in{ opacity:1; transform:none; }
+
+/* ── HERO ── */
+.hero{ justify-content:space-between; padding-top:clamp(7rem, 16vh, 11rem); }
+.hero__top{
+  display:flex; justify-content:space-between;
+  font-family:var(--f-mono); font-size:.68rem;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:var(--muted);
+  padding-bottom:1rem; border-bottom:1px solid var(--line);
+}
+.hero__title{
+  font-family:var(--f-display); font-weight:700;
+  font-size:clamp(4.5rem, 24vw, 17rem);
+  line-height:.85; letter-spacing:-.07em;
+  margin:clamp(1.5rem, 4vh, 3rem) 0;
+  position:relative;
+  cursor:pointer;
+  user-select:none;
+  transition:filter .3s;
+}
+.hero__title:hover{ filter:drop-shadow(0 0 24px rgba(255,77,31,.35)); }
+.hero__title span{
+  display:inline-block;
+  opacity:0; transform:translateY(.4em);
+  animation:letterIn .9s var(--ease) forwards;
+  animation-delay:calc(var(--i) * .05s + .3s);
+  transition:transform .4s var(--ease), color .3s;
+  will-change:transform;
+}
+.hero__title span:hover{
+  transform:translateY(-14px) rotate(-6deg);
+  color:var(--accent);
+}
+@keyframes letterIn{ to{ opacity:1; transform:none; } }
+.hero__title.is-glitch{
+  animation:glitch .35s steps(2, end) 1;
+}
+@keyframes glitch{
+  0%,100%{ transform:translate(0,0); filter:none; }
+  20%{ transform:translate(-3px,2px); filter:hue-rotate(45deg); }
+  40%{ transform:translate(3px,-2px); filter:hue-rotate(-45deg); }
+  60%{ transform:translate(-2px,-1px); filter:invert(.1); }
+  80%{ transform:translate(2px,1px); filter:none; }
+}
+
+.hero__bottom{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  gap:2rem; flex-wrap:wrap;
+  padding-top:2rem; border-top:1px solid var(--line);
+}
+.hero__desc{
+  font-size:clamp(.95rem, .9rem + .3vw, 1.1rem);
+  color:var(--dim); max-width:46ch; line-height:1.55;
+}
+.hero__scroll{
+  display:flex; align-items:center; gap:.7rem;
+  font-family:var(--f-mono); font-size:.66rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--muted);
+}
+.hero__scroll svg{ width:14px; height:14px; animation:scrollArrow 2.4s var(--ease) infinite; }
+@keyframes scrollArrow{
+  0%,100%{ transform:translateY(-3px); opacity:.5; }
+  50%    { transform:translateY(3px);  opacity:1; }
+}
+
+/* ── О НАС ── */
+.about__layout{
+  display:grid; gap:clamp(2.5rem, 6vw, 5rem);
+  grid-template-columns:1fr;
+}
+@media (min-width:960px){
+  .about__layout{ grid-template-columns:1.4fr 1fr; align-items:start; }
+}
+.manifest{
+  font-family:var(--f-display); font-weight:400;
+  font-size:clamp(1.35rem, .8rem + 1.8vw, 2.1rem);
+  line-height:1.32; letter-spacing:-.025em;
+  background-image:linear-gradient(90deg, var(--text) 50%, rgba(240,239,233,.18) 50%);
+  background-size:200% 100%;
+  background-position:calc((1 - var(--p, 0)) * 100%) 0;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+}
+.manifest em{
+  font-style:italic; color:var(--accent);
+  -webkit-text-fill-color:var(--accent); background:none;
+}
+
+.facts{
+  display:grid; gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:14px; overflow:hidden;
+}
+.fact{
+  background:var(--panel);
+  padding:1.1rem 1.25rem;
+  transition:background-color .3s, transform .3s;
+  cursor:default;
+}
+.fact:hover{ background:var(--panel-2); transform:translateX(4px); }
+.fact dt{
+  font-family:var(--f-mono); font-size:.6rem;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:.4rem;
+}
+.fact dd{
+  font-family:var(--f-display); font-weight:500;
+  font-size:.98rem; letter-spacing:-.01em;
+}
+
+/* ── ЦИФРЫ ── */
+.stats__grid{
+  display:grid; gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:14px; overflow:hidden;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom:2.5rem;
+}
+.stat{
+  background:var(--panel);
+  padding:1.75rem 1.5rem 1.5rem;
+  transition:background-color .3s;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.stat::after{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,77,31,.18), transparent 60%);
+  opacity:0; transition:opacity .4s; pointer-events:none;
+}
+.stat:hover{ background:var(--panel-2); }
+.stat:hover::after{ opacity:1; }
+.stat__num{
+  font-family:var(--f-display); font-weight:600;
+  font-size:clamp(2.2rem, 1.2rem + 3vw, 3.6rem);
+  line-height:1; letter-spacing:-.05em;
+  display:flex; align-items:baseline; gap:.15em;
+}
+.stat__suf{ font-size:.4em; color:var(--muted); font-weight:400; }
+.stat__label{
+  margin-top:.85rem;
+  font-family:var(--f-mono); font-size:.62rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted);
+}
+.stat__hint{
+  font-family:var(--f-mono); font-size:.58rem;
+  letter-spacing:.14em; color:var(--accent);
+  margin-top:.4rem; opacity:0;
+  transition:opacity .3s;
+  text-transform:uppercase;
+}
+.stat:hover .stat__hint{ opacity:1; }
+
+/* ── TIMELINE ── */
+.timeline{ position:relative; padding-left:clamp(2rem, 5vw, 3.5rem); }
+.tl-svg{
+  position:absolute; left:0; top:0; bottom:0;
+  width:2px; height:100%; overflow:visible;
+}
+.tl-svg line{ stroke:var(--text); stroke-width:2; stroke-linecap:round; }
+.tl-item{ position:relative; padding:0 0 clamp(2rem, 4.5vw, 3rem); }
+.tl-item:last-child{ padding-bottom:0; }
+.tl-item::before{
+  content:''; position:absolute;
+  left:calc(clamp(2rem, 5vw, 3.5rem) * -1);
+  top:.35rem; transform:translateX(-1px);
+  width:9px; height:9px; border-radius:50%;
+  background:var(--bg);
+  border:2px solid var(--line-2);
+  transition:border-color .5s, background-color .5s, transform .5s, box-shadow .5s;
+}
+.tl-item.in::before{
+  background:var(--accent); border-color:var(--accent);
+  transform:translateX(-1px) scale(1.15);
+  box-shadow:0 0 16px rgba(255,77,31,.7);
+}
+.tl-date{
+  font-family:var(--f-mono); font-size:.62rem;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:.55rem;
+}
+.tl-title{
+  font-family:var(--f-display); font-weight:500;
+  font-size:clamp(1.05rem, .9rem + .8vw, 1.5rem);
+  letter-spacing:-.02em; line-height:1.2; margin-bottom:.4rem;
+}
+.tl-text{ color:var(--dim); max-width:56ch; font-size:.94rem; line-height:1.55; }
+
+/* ── ФАКТЫ ── */
+.fact-grid{
+  display:grid; gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:14px; overflow:hidden;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+}
+.fact-card{
+  background:var(--panel);
+  padding:1.5rem 1.4rem 1.4rem;
+  display:flex; flex-direction:column;
+  transition:background-color .3s, transform .4s var(--ease);
+  min-height:170px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.fact-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--accent), var(--neon));
+  transform:scaleX(0); transform-origin:0 50%;
+  transition:transform .6s var(--ease);
+}
+.fact-card:hover::before{ transform:scaleX(1); }
+.fact-card:hover{ background:var(--panel-2); }
+.fact-card:active{ transform:scale(.98); }
+.fact-card__num{
+  font-family:var(--f-mono); font-size:.62rem;
+  letter-spacing:.2em; color:var(--muted);
+  margin-bottom:auto;
+  transition:color .3s;
+}
+.fact-card:hover .fact-card__num{ color:var(--accent); }
+.fact-card__name{
+  font-family:var(--f-display); font-weight:600;
+  font-size:1.02rem; letter-spacing:-.02em;
+  line-height:1.2; margin-top:1.25rem;
+}
+.fact-card__text{
+  font-size:.92rem; color:var(--dim);
+  margin-top:.5rem; line-height:1.5;
+}
+
+/* ── ДОСТИЖЕНИЯ ── */
+.achieve{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel);
+  overflow:hidden;
+}
+.achieve__item{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:1.5rem; align-items:baseline;
+  padding:1.15rem 1.4rem;
+  border-bottom:1px solid var(--line);
+  transition:background-color .3s, transform .3s;
+  cursor:default;
+}
+.achieve__item:last-child{ border-bottom:0; }
+.achieve__item:hover{ background:var(--panel-2); }
+.achieve__idx{
+  font-family:var(--f-mono); font-size:.66rem;
+  letter-spacing:.16em; color:var(--muted);
+  transition:color .3s;
+}
+.achieve__item:hover .achieve__idx{ color:var(--accent); }
+.achieve__text{
+  font-family:var(--f-display); font-weight:500;
+  font-size:clamp(.95rem, .9rem + .3vw, 1.15rem);
+  letter-spacing:-.01em; line-height:1.35;
+}
+.achieve__tag{
+  font-family:var(--f-mono); font-size:.6rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--dim);
+}
+
+/* ── ПРИКОЛЫ ── */
+.memes{
+  display:grid; gap:1rem;
+  grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+}
+.meme{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:1.4rem 1.3rem;
+  min-height:170px;
+  display:flex; flex-direction:column;
+  transition:transform .4s var(--ease), border-color .3s, background-color .3s;
+  cursor:default;
+  position:relative;
+  overflow:hidden;
+}
+.meme:hover{
+  transform:translateY(-6px) rotate(-.5deg);
+  border-color:var(--line-2);
+  background:var(--panel-2);
+}
+.meme__num{
+  font-family:var(--f-mono); font-size:.6rem;
+  letter-spacing:.2em; color:var(--muted);
+}
+.meme__text{
+  font-family:var(--f-display); font-weight:500;
+  font-size:1rem; line-height:1.35;
+  letter-spacing:-.01em;
+  margin:1rem 0 auto;
+}
+.meme__meta{
+  font-family:var(--f-mono); font-size:.58rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted);
+  padding-top:1rem;
+  border-top:1px solid var(--line);
+  margin-top:1rem;
+}
+
+/* ── ФИНАЛ ── */
+.final{ text-align:left; }
+.final__title{
+  font-family:var(--f-display); font-weight:600;
+  font-size:clamp(2.8rem, 1rem + 8vw, 8rem);
+  line-height:.94; letter-spacing:-.05em;
+  margin-bottom:clamp(1.5rem, 4vh, 2.5rem);
+}
+.final__title span{
+  display:inline-block;
+  opacity:0; transform:translateY(.35em);
+  transition:opacity .8s var(--ease), transform .8s var(--ease);
+  transition-delay:calc(var(--i) * .035s);
+}
+.final__title.in span{ opacity:1; transform:none; }
+.final__desc{
+  font-size:clamp(1rem, .95rem + .3vw, 1.15rem);
+  color:var(--dim); max-width:52ch; margin-bottom:2.5rem;
+}
+.final__actions{ display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:clamp(3rem, 8vh, 5rem); }
+
+.btn{
+  display:inline-flex; align-items:center; gap:.65rem;
+  padding:.85rem 1.4rem; border-radius:10px;
+  font-family:var(--f-display); font-weight:500;
+  font-size:.92rem; letter-spacing:-.005em;
+  background:var(--text); color:var(--bg);
+  transition:transform .25s var(--ease), background-color .25s;
+  position:relative;
+  overflow:hidden;
+}
+.btn:hover{ transform:translateY(-2px); background:#fff; }
+.btn:active{ transform:translateY(0) scale(.98); }
+.btn svg{ width:15px; height:15px; }
+.btn--ghost{
+  background:transparent; color:var(--text);
+  border:1px solid var(--line-2);
+}
+.btn--ghost:hover{ background:rgba(255,255,255,.04); border-color:var(--text); }
+
+.btn__ripple{
+  position:absolute;
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(255,77,31,.6);
+  transform:translate(-50%,-50%) scale(0);
+  animation:ripple .7s var(--ease) forwards;
+  pointer-events:none;
+}
+@keyframes ripple{ to{ transform:translate(-50%,-50%) scale(40); opacity:0; } }
+
+.final__bottom{
+  display:grid; gap:2rem; grid-template-columns:1fr;
+  padding-top:2rem; border-top:1px solid var(--line);
+}
+@media (min-width:768px){
+  .final__bottom{ grid-template-columns:auto 1fr; align-items:center; }
+}
+
+.qr{ display:flex; align-items:center; gap:1rem; justify-self:start; }
+.qr canvas{
+  width:100px; height:100px; border-radius:10px;
+  background:#fff; padding:6px;
+  cursor:pointer;
+  transition:transform .3s var(--ease);
+}
+.qr canvas:hover{ transform:rotate(-3deg) scale(1.05); }
+.qr__cap{
+  font-family:var(--f-mono); font-size:.62rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted); line-height:1.9;
+}
+.qr__cap b{
+  display:block; color:var(--text);
+  font-weight:500; font-size:.88rem;
+  letter-spacing:-.005em; font-family:var(--f-display);
+  text-transform:none;
+}
+
+.socials{ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:flex-start; }
+@media (min-width:768px){ .socials{ justify-content:flex-end; } }
+.social{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.6rem 1rem; border-radius:10px;
+  border:1px solid var(--line);
+  font-family:var(--f-display); font-weight:500;
+  font-size:.82rem;
+  transition:border-color .3s, background-color .3s, transform .3s;
+}
+.social:hover{ border-color:var(--line-2); background:rgba(255,255,255,.03); transform:translateY(-2px); }
+.social svg{ width:14px; height:14px; }
+
+.credits{
+  margin-top:3rem;
+  font-family:var(--f-mono); font-size:.6rem;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted);
+}
+
+#confetti{ position:fixed; inset:0; z-index:500; pointer-events:none; }
+
+/* ── ТОСТЫ (уведомления) ── */
+.toasts{
+  position:fixed;
+  right:1rem; bottom:1rem;
+  z-index:9000;
+  display:flex; flex-direction:column; gap:.5rem;
+  align-items:flex-end;
+  pointer-events:none;
+  max-width:min(360px, 90vw);
+}
+.toast{
+  pointer-events:auto;
+  background:rgba(20,20,24,.95);
+  border:1px solid var(--line-2);
+  border-left:2px solid var(--accent);
+  border-radius:10px;
+  padding:.75rem 1rem;
+  backdrop-filter:blur(10px);
+  font-family:var(--f-display); font-weight:500;
+  font-size:.85rem; line-height:1.35;
+  color:var(--text);
+  box-shadow:0 12px 40px -12px rgba(0,0,0,.9);
+  animation:toastIn .5s var(--ease) forwards;
+  max-width:100%;
+  display:flex; align-items:flex-start; gap:.6rem;
+  cursor:pointer;
+  transition:transform .2s, opacity .3s;
+}
+.toast:hover{ transform:translateX(-4px); }
+.toast.is-out{ animation:toastOut .35s var(--ease) forwards; }
+.toast__emoji{ font-size:1.1rem; line-height:1; flex-shrink:0; }
+.toast__body{ flex:1; }
+.toast__src{
+  display:block;
+  font-family:var(--f-mono); font-size:.55rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted); margin-top:.35rem;
+}
+@keyframes toastIn{
+  from{ opacity:0; transform:translateX(20px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+@keyframes toastOut{
+  to{ opacity:0; transform:translateX(20px); }
+}
+
+/* ── ПАНЕЛЬ-ПАНА (внизу слева) ── */
+.panic{
+  position:fixed;
+  left:1rem; bottom:1rem;
+  z-index:9000;
+  display:flex; flex-direction:column; gap:.4rem;
+  align-items:flex-start;
+}
+.panic__btn{
+  background:var(--panel);
+  border:1px solid var(--line-2);
+  border-radius:10px;
+  padding:.7rem 1rem;
+  font-family:var(--f-mono); font-size:.62rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--dim);
+  display:inline-flex; align-items:center; gap:.5rem;
+  transition:color .3s, border-color .3s, background-color .3s, transform .25s;
+}
+.panic__btn:hover{
+  color:var(--accent); border-color:var(--accent);
+  background:rgba(255,77,31,.08);
+  transform:translateY(-2px);
+}
+.panic__btn:active{ transform:translateY(0) scale(.97); }
+.panic__dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent);
+  animation:pulse 1.5s ease-in-out infinite;
+}
+
+/* ── ПРЯЧУЩАЯСЯ КНОПКА ── */
+.runaway{
+  position:relative;
+  transition:transform .35s var(--ease);
+}
+
+/* ── COMIC SANS ── */
+body.comic, body.comic *{
+  font-family:'Comic Sans MS','Comic Sans','Chalkboard SE',cursive !important;
+  letter-spacing:0 !important;
+}
+body.comic .hero__title{ transform:rotate(-2deg); }
+
+/* ── АДАПТИВ ── */
+@media (max-width:640px){
+  .dots{ right:.6rem; gap:.6rem; }
+  .dot__label{ display:none; }
+  .header__meta{ display:none; }
+  .hero__top{ flex-direction:column; gap:.4rem; }
+  .toasts{ right:.5rem; bottom:.5rem; left:.5rem; max-width:none; }
+  .panic{ left:.5rem; bottom:auto; top:4.5rem; }
+  .panic__btn{ padding:.5rem .7rem; font-size:.55rem; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  [data-reveal]{ opacity:1; transform:none; }
+  .hero__title span,.final__title span{ opacity:1; transform:none; }
+  #confetti,.trail{ display:none; }
+  .manifest{ background-position:0 0; }
+  #stars{ display:none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ══════════ ЗВЁЗДНЫЙ ТОННЕЛЬ ══════════ -->
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- ══════════ ПРОГРЕСС ══════════ -->
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ══════════ ХЕДЕР ══════════ -->
+<header class="header">
+  <a class="logo" href="#hero" id="logo">ИС-423</a>
+  <div class="header__right">
+    <button class="comic-btn" id="comicBtn" title="Режим Comic Sans">comic</button>
+    <button class="fs-btn" id="fsBtn" title="Полный экран (F)" aria-label="Полный экран">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════ ТОЧКИ ══════════ -->
+<nav class="dots" id="dots" aria-label="Навигация"></nav>
+
+<main>
+
+  <!-- ══ 1. HERO ══ -->
+  <section class="section hero" id="hero" data-title="Начало">
+    <div class="wrap">
+      <div class="hero__top">
+        <span>Информационные системы и программирование</span>
+        <span>2022 — 2026</span>
+      </div>
+      <h1 class="hero__title" id="heroTitle" title="Нажми">ИС-423</h1>
+      <div class="hero__bottom">
+        <p class="hero__desc">
+          Тридцать три человека, четыре года, пять кураторов.
+          И ни одного отчисления. Ниже — что мы о себе знаем.
+        </p>
+        <div class="hero__scroll">
+          <span>Скролль</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 2. О НАС ══ -->
+  <section class="section" id="about" data-title="О нас">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <span class="num">01 / О нас</span>
+        <h2 class="section-title">Что это за группа</h2>
+      </header>
+
+      <div class="about__layout">
+        <p class="manifest" id="manifest" data-reveal style="--d:.05s">
+          Тридцать три человека, которые четыре года сдавали лабы, делили один
+          удлинитель на всю аудиторию и как-то дожили до диплома. Кто-то уже
+          работает, кто-то собирается в универ. Все — свои.
+          И, что важно, <em>никого не отчислили</em> за всё это время.
+        </p>
+
+        <dl class="facts" data-reveal style="--d:.15s">
+          <div class="fact"><dt>Специальность</dt><dd>09.02.07 — ИС и программирование</dd></div>
+          <div class="fact"><dt>Курс</dt><dd>4 курс · выпуск 2026</dd></div>
+          <div class="fact"><dt>Кураторов за 4 года</dt><dd>5 человек</dd></div>
+          <div class="fact"><dt>Форма обучения</dt><dd>Бюджет</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3. ЦИФРЫ ══ -->
+  <section class="section" id="stats" data-title="Цифры">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <span class="num">02 / Цифры</span>
+        <h2 class="section-title">Без лишних слов</h2>
+      </header>
+
+      <div class="stats__grid" data-reveal>
+        <div class="stat">
+          <div class="stat__num"><span data-count="33">0</span></div>
+          <div class="stat__label">Всего студентов</div>
+          <div class="stat__hint">// все на месте</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><span data-count="5">0</span></div>
+          <div class="stat__label">Кураторов</div>
+          <div class="stat__hint">// текучка, что поделать</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><span data-count="4">0</span></div>
+          <div class="stat__label">Года вместе</div>
+          <div class="stat__hint">// и это не предел</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num"><span data-count="0">0</span></div>
+          <div class="stat__label">Отчисленных</div>
+          <div class="stat__hint">// мы сами в шоке</div>
+        </div>
+      </div>
+
+      <div class="achieve" data-reveal style="--d:.1s">
+        <div class="achieve__item">
+          <span class="achieve__idx">01</span>
+          <span class="achieve__text">Бюджетная основа обучения</span>
+          <span class="achieve__tag">форма</span>
+        </div>
+        <div class="achieve__item">
+          <span class="achieve__idx">02</span>
+          <span class="achieve__text">Сочинили песню на посвящение</span>
+          <span class="achieve__tag">творчество</span>
+        </div>
+        <div class="achieve__item">
+          <span class="achieve__idx">03</span>
+          <span class="achieve__text">Участие в чемпионате «Профессионалы»</span>
+          <span class="achieve__tag">соревнование</span>
+        </div>
+        <div class="achieve__item">
+          <span class="achieve__idx">04</span>
+          <span class="achieve__text">7 место на хакатоне</span>
+          <span class="achieve__tag">топ-10</span>
+        </div>
+        <div class="achieve__item">
+          <span class="achieve__idx">05</span>
+          <span class="achieve__text">Никого не отчислили за 4 курса</span>
+          <span class="achieve__tag">главное</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 4. ХРОНИКА ══ -->
+  <section class="section" id="timeline" data-title="Хроника">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <span class="num">03 / Хроника</span>
+        <h2 class="section-title">Что было</h2>
+      </header>
+
+      <div class="timeline" id="tl">
+        <svg class="tl-svg" viewBox="0 0 2 100" preserveAspectRatio="none" aria-hidden="true">
+          <line id="tlLine" x1="1" y1="0" x2="1" y2="100"
+                pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        </svg>
+
+        <div class="tl-item" data-reveal>
+          <div class="tl-date">Сентябрь 2022</div>
+          <h3 class="tl-title">Первое сентября</h3>
+          <p class="tl-text">Тридцать три незнакомца в одной аудитории. Через неделю — уже свой чат и свои мемы.</p>
+        </div>
+        <div class="tl-item" data-reveal>
+          <div class="tl-date">Декабрь 2022</div>
+          <h3 class="tl-title">Первая сессия</h3>
+          <p class="tl-text">Сдали все. Куратор тогда был ещё первый из пяти.</p>
+        </div>
+        <div class="tl-item" data-reveal>
+          <div class="tl-date">Апрель 2023</div>
+          <h3 class="tl-title">Песня на посвящение</h3>
+          <p class="tl-text">Сочинили и исполнили всем составом. С тех пор — неофициальный гимн группы.</p>
+        </div>
+        <div class="tl-item" data-reveal>
+          <div class="tl-date">2024</div>
+          <h3 class="tl-title">«Профессионалы»</h3>
+          <p class="tl-text">Участие в чемпионате. Опыт, знакомства и понимание, куда двигаться дальше.</p>
+        </div>
+        <div class="tl-item" data-reveal>
+          <div class="tl-date">2025</div>
+          <h3 class="tl-title">Хакатон — 7 место</h3>
+          <p class="tl-text">Не победа, но вошли в десятку. Для первого раза — нормально.</p>
+        </div>
+        <div class="tl-item" data-reveal>
+          <div class="tl-date">Июнь 2026</div>
+          <h3 class="tl-title">Диплом</h3>
+          <p class="tl-text">Все 33 человека, никто не отвалился. Финиш. Дальше — универ, работа, свои проекты.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 5. ФАКТЫ ══ -->
+  <section class="section" id="facts" data-title="Факты">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <span class="num">04 / Что мы о себе знаем</span>
+        <h2 class="section-title">Одиннадцать фактов</h2>
+      </header>
+
+      <div class="fact-grid">
+        <article class="fact-card" data-reveal>
+          <span class="fact-card__num">01</span>
+          <h3 class="fact-card__name">Лиза Абрамова</h3>
+          <p class="fact-card__text">Коллекционировала игрушечных пони.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.03s">
+          <span class="fact-card__num">02</span>
+          <h3 class="fact-card__name">Влада Булкина</h3>
+          <p class="fact-card__text">Выступала на «Поле чудес».</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.06s">
+          <span class="fact-card__num">03</span>
+          <h3 class="fact-card__name">Серёжа Туркевич</h3>
+          <p class="fact-card__text">Топ-1 в «Добром» по баскетболу.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.09s">
+          <span class="fact-card__num">04</span>
+          <h3 class="fact-card__name">Никита Бубнов</h3>
+          <p class="fact-card__text">Есть своё ИП.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.12s">
+          <span class="fact-card__num">05</span>
+          <h3 class="fact-card__name">Настя Бодягина</h3>
+          <p class="fact-card__text">На первом курсе сменила три группы. За четыре года — пять кураторов.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.15s">
+          <span class="fact-card__num">06</span>
+          <h3 class="fact-card__name">Миша Крылов</h3>
+          <p class="fact-card__text">Третий разряд по спортивному туризму и третий — по судейству.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.18s">
+          <span class="fact-card__num">07</span>
+          <h3 class="fact-card__name">Варя Александрова</h3>
+          <p class="fact-card__text">Есть робот-пылесос. Он живёт своей жизнью.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.21s">
+          <span class="fact-card__num">08</span>
+          <h3 class="fact-card__name">Толя Большаков</h3>
+          <p class="fact-card__text">Прошёл «Ведьмака» на все достижения.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.24s">
+          <span class="fact-card__num">09</span>
+          <h3 class="fact-card__name">Егор Сердышев</h3>
+          <p class="fact-card__text">Первое место в районе на олимпиаде по безопасности.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.27s">
+          <span class="fact-card__num">10</span>
+          <h3 class="fact-card__name">Даниил Кузмин</h3>
+          <p class="fact-card__text">Красиво рисует.</p>
+        </article>
+        <article class="fact-card" data-reveal style="--d:.3s">
+          <span class="fact-card__num">11</span>
+          <h3 class="fact-card__name">Вся группа</h3>
+          <p class="fact-card__text">Бюджет. Песня на посвящение. И ни одного отчисления за четыре года.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6. ПРИКОЛЫ ══ -->
+  <section class="section" id="memes" data-title="Приколы">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <span class="num">05 / Внутри группы</span>
+        <h2 class="section-title">Наши приколы</h2>
+      </header>
+
+      <div class="memes">
+        <article class="meme" data-reveal>
+          <div class="meme__num">01</div>
+          <p class="meme__text">«Сдал лабу в 23:59:59» — национальный вид спорта группы.</p>
+          <div class="meme__meta">классика</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.03s">
+          <div class="meme__num">02</div>
+          <p class="meme__text">«У кого удлинитель?» — вопрос, который звучит каждую пару уже четыре года.</p>
+          <div class="meme__meta">ритуал</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.06s">
+          <div class="meme__num">03</div>
+          <p class="meme__text">Пара в 8:30. Группа в 8:47. Препод тоже в 8:47.</p>
+          <div class="meme__meta">утренний блок</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.09s">
+          <div class="meme__num">04</div>
+          <p class="meme__text">Гуглим «как работает git rebase» в четвёртый раз. Всё ещё не работает.</p>
+          <div class="meme__meta">вечная тема</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.12s">
+          <div class="meme__num">05</div>
+          <p class="meme__text">Общий чат: 90% стикеры, 9% «во сколько пара?», 1% по делу.</p>
+          <div class="meme__meta">коммуникация</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.15s">
+          <div class="meme__num">06</div>
+          <p class="meme__text">«Работает у меня» — фраза, после которой начинается настоящая отладка.</p>
+          <div class="meme__meta">dev-жизнь</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.18s">
+          <div class="meme__num">07</div>
+          <p class="meme__text">Куратор: «Это пойдёт в диплом». Группа: «Это не пойдёт в диплом».</p>
+          <div class="meme__meta">финальный год</div>
+        </article>
+        <article class="meme" data-reveal style="--d:.21s">
+          <div class="meme__num">08</div>
+          <p class="meme__text">Кофейный автомат на третьем этаже — неофициальный второй куратор.</p>
+          <div class="meme__meta">спонсор сессии</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7. ФИНАЛ ══ -->
+  <section class="section final" id="final" data-title="Финал">
+    <div class="wrap">
+      <header class="section-head" data-reveal>
+        <span class="num">06 / Финал</span>
+      </header>
+
+      <h2 class="final__title" id="finalTitle">Спасибо за внимание</h2>
+
+      <p class="final__desc" data-reveal style="--d:.15s">
+        Четыре года, тридцать три человека, пять кураторов и ни одного
+        отчисления. Было хорошо — и мы ещё вернёмся.
+      </p>
+
+      <div class="final__actions" data-reveal style="--d:.25s">
+        <button class="btn" id="likeBtn">
+          Оценить на 5
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </button>
+        <button class="btn btn--ghost runaway" id="runawayBtn">Не нажимать</button>
+        <button class="btn btn--ghost" data-scroll="#hero">В начало</button>
+      </div>
+
+      <div class="final__bottom">
+        <div class="qr" data-reveal>
+          <canvas id="qr" width="200" height="200" aria-label="QR-код"></canvas>
+          <div class="qr__cap">
+            Чат группы
+            <b>@is423_chat</b>
+          </div>
+        </div>
+
+        <div class="socials" data-reveal style="--d:.1s">
+          <a class="social" href="#" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.1 12.9 2.6 11.5c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.6.2 1.5 1z"/></svg>
+            Telegram
+          </a>
+          <a class="social" href="#" aria-label="VK">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.2 18.2c-5.9 0-9.3-4-9.4-10.8h3c.1 5 2.3 7.1 4 7.5V7.4h2.8v4.2c1.7-.2 3.5-2.1 4.1-4.2h2.8c-.5 2.6-2.4 4.5-3.7 5.3 1.3.6 3.5 2.3 4.3 5.5h-3.1c-.6-1.9-2.2-3.4-4.4-3.7v3.7h-.4z"/></svg>
+            VK
+          </a>
+          <a class="social" href="#" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <p class="credits">© 2026 · Группа ИС-423 · сделано с любовью и без фреймворков</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════ ПАНЕЛЬ-ПАНА ══════════ -->
+<div class="panic">
+  <button class="panic__btn" id="panicBtn">
+    <span class="panic__dot"></span>
+    Препод идёт!
+  </button>
+</div>
+
+<!-- ══════════ ТОСТЫ ══════════ -->
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   ИС-423 · ПРЕЗЕНТАЦИЯ
+   Vanilla JS. Без библиотек. Работает офлайн.
+   ══════════════════════════════════════════════════════════════════ */
+(() => {
+'use strict';
+
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+/* ────────────────────────────────────────────
+   1. HERO — разбивка "ИС-423" на буквы
+   ──────────────────────────────────────────── */
+(function heroTitle() {
+  const el = $('#heroTitle');
+  if (!el) return;
+  const text = el.textContent.trim();
+  el.textContent = '';
+  [...text].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.style.setProperty('--i', i);
+    s.textContent = ch;
+    el.appendChild(s);
+  });
+})();
+
+/* ────────────────────────────────────────────
+   2. ФИНАЛЬНЫЙ ЗАГОЛОВОК
+   ──────────────────────────────────────────── */
+(function finalTitle() {
+  const el = $('#finalTitle');
+  if (!el) return;
+  const text = el.textContent.trim();
+  el.textContent = '';
+  [...text].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.style.setProperty('--i', i);
+    s.textContent = ch === ' ' ? '\u00A0' : ch;
+    el.appendChild(s);
+  });
+})();
+
+/* ────────────────────────────────────────────
+   3. ЗВЁЗДНЫЙ ТОННЕЛЬ
+   Полёт сквозь звёзды. Скорость зависит от скролла.
+   ──────────────────────────────────────────── */
+const starfield = (() => {
+  if (RM) return { setSpeed: () => {} };
+  const canvas = $('#stars');
+  if (!canvas) return { setSpeed: () => {} };
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+
+  let W = 0, H = 0;
+  const N = innerWidth < 768 ? 180 : 360;
+  const RANGE = 1600;        // разлёт звёзд по x/y
+  const Z_RANGE = 1400;      // глубина
+
+  const stars = Array.from({ length: N }, () => ({
+    x: (Math.random() - 0.5) * RANGE,
+    y: (Math.random() - 0.5) * RANGE,
+    z: Math.random() * Z_RANGE + 1,
+    hue: Math.random() < 0.15 ? 12 : (Math.random() < 0.5 ? 0 : 0), // немного рыжих
+    bright: 0.5 + Math.random() * 0.5,
+  }));
+
+  let baseSpeed = 1.6;
+  let targetSpeed = 1.6;
+  let scrollBoost = 0;
+
+  function resize() {
+    W = innerWidth; H = innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  addEventListener('resize', resize, { passive: true });
+
+  function frame() {
+    baseSpeed += (targetSpeed - baseSpeed) * 0.06;
+
+    ctx.fillStyle = 'rgba(10,10,11,0.35)';
+    ctx.fillRect(0, 0, W, H);
+
+    const cx = W / 2, cy = H / 2;
+    const f = 420;
+
+    for (const s of stars) {
+      s.z -= baseSpeed;
+
+      if (s.z <= 1) {
+        s.x = (Math.random() - 0.5) * RANGE;
+        s.y = (Math.random() - 0.5) * RANGE;
+        s.z = Z_RANGE;
+      }
+
+      const z = s.z;
+      const zPrev = s.z + baseSpeed * 1.8;
+      const k = f / z;
+      const kPrev = f / zPrev;
+
+      const sx = cx + s.x * k;
+      const sy = cy + s.y * k;
+      const px = cx + s.x * kPrev;
+      const py = cy + s.y * kPrev;
+
+      if (sx < -50 || sx > W + 50 || sy < -50 || sy > H + 50) continue;
+
+      const depth = 1 - z / Z_RANGE;    // 0 далеко, 1 близко
+      const alpha = clamp(depth * depth * 1.4, 0, 1) * s.bright;
+      const r = clamp(depth * 2.6, 0.3, 2.8);
+
+      // цвет: чем ближе — тем более тёплый (в сторону accent)
+      const red = 240 + (255 - 240) * depth;
+      const grn = 239 - 160 * depth;
+      const blu = 233 - 200 * depth;
+      const col = 'rgba(' + (red | 0) + ',' + (grn | 0) + ',' + (blu | 0) + ',' + alpha.toFixed(3) + ')';
+
+      // короткая линия = motion blur
+      ctx.strokeStyle = col;
+      ctx.lineWidth = r;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(sx, sy);
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  return {
+    setSpeed: v => { targetSpeed = 1.2 + v * 9; },
+    getSpeed: () => baseSpeed,
+  };
+})();
+
+/* ────────────────────────────────────────────
+   4. REVEAL / СЧЁТЧИКИ / TIMELINE
+   ──────────────────────────────────────────── */
+const revealIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+$$('[data-reveal]').forEach(el => revealIO.observe(el));
+
+const tlIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); tlIO.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+$$('.tl-item').forEach(el => tlIO.observe(el));
+
+/* Заголовок финала */
+const finalTitle = $('#finalTitle');
+if (finalTitle) {
+  new IntersectionObserver((e, o) => {
+    if (e[0].isIntersecting) { finalTitle.classList.add('in'); o.disconnect(); }
+  }, { threshold: 0.4 }).observe(finalTitle);
+}
+
+/* Счётчики */
+function countUp(el) {
+  const target = +el.dataset.count;
+  if (RM) { el.textContent = target; return; }
+  const t0 = performance.now(), dur = 1500;
+  const step = now => {
+    const t = clamp((now - t0) / dur, 0, 1);
+    const e = 1 - Math.pow(1 - t, 4);
+    el.textContent = Math.round(target * e);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+const countIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { countUp(e.target); countIO.unobserve(e.target); }
+  });
+}, { threshold: 0.6 });
+$$('[data-count]').forEach(el => countIO.observe(el));
+
+/* ────────────────────────────────────────────
+   5. НАВИГАЦИЯ
+   ──────────────────────────────────────────── */
+const sections = $$('.section');
+const dotsNav  = $('#dots');
+const progress = $('#progress');
+const manifest = $('#manifest');
+const tlLine   = $('#tlLine');
+const tlWrap   = $('#tl');
+
+sections.forEach((sec, i) => {
+  const b = document.createElement('button');
+  b.className = 'dot';
+  b.type = 'button';
+  b.setAttribute('aria-label', sec.dataset.title || ('Секция ' + (i + 1)));
+  b.innerHTML = '<span class="dot__label">' + (sec.dataset.title || '') + '</span>';
+  b.addEventListener('click', () => goTo(i));
+  dotsNav.appendChild(b);
+});
+const dotEls = $$('.dot', dotsNav);
+
+let current = 0;
+function goTo(i) {
+  i = clamp(i, 0, sections.length - 1);
+  sections[i].scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+  current = i;
+}
+
+sections.forEach(s => {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = sections.indexOf(e.target);
+        current = idx;
+        dotEls.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+      }
+    });
+  }, { rootMargin: '-48% 0px -48% 0px', threshold: 0 });
+  io.observe(s);
+});
+
+$$('[data-scroll]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = $(btn.dataset.scroll);
+    if (t) t.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+  });
+});
+
+window.addEventListener('keydown', e => {
+  if (e.target.closest && e.target.closest('input, textarea')) return;
+  switch (e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown':
+      e.preventDefault(); goTo(current + 1); break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); goTo(current - 1); break;
+    case 'Home': e.preventDefault(); goTo(0); break;
+    case 'End':  e.preventDefault(); goTo(sections.length - 1); break;
+    case 'f': case 'F': toggleFullscreen(); break;
+  }
+});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(()=>{});
+  else document.exitFullscreen?.();
+}
+$('#fsBtn')?.addEventListener('click', toggleFullscreen);
+
+/* ────────────────────────────────────────────
+   6. СКРОЛЛ-ЭФФЕКТЫ
+   ──────────────────────────────────────────── */
+let ticking = false, scrollY_ = 0, scrollP = 0, prevP = 0;
+
+function updateOnScroll() {
+  ticking = false;
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const ratio = max > 0 ? clamp(scrollY_ / max, 0, 1) : 0;
+
+  /* скорость звёзд зависит от скорости скролла */
+  const vel = Math.abs(ratio - prevP);
+  prevP = ratio;
+  scrollP = ratio;
+  starfield.setSpeed(scrollP * 1.2 + vel * 40);
+
+  progress.style.transform = 'scaleX(' + ratio + ')';
+
+  if (manifest) {
+    const r = manifest.getBoundingClientRect();
+    const p = clamp((innerHeight * 0.88 - r.top) / (r.height + innerHeight * 0.3), 0, 1);
+    manifest.style.setProperty('--p', p.toFixed(3));
+  }
+
+  if (tlWrap && tlLine) {
+    const r = tlWrap.getBoundingClientRect();
+    const p = clamp((innerHeight * 0.72 - r.top) / r.height, 0, 1);
+    tlLine.setAttribute('stroke-dashoffset', String(1 - p));
+  }
+}
+function onScroll() {
+  scrollY_ = window.scrollY;
+  if (!ticking) { ticking = true; requestAnimationFrame(updateOnScroll); }
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll, { passive: true });
+updateOnScroll();
+
+/* ────────────────────────────────────────────
+   7. КУРСОРНЫЙ СЛЕД
+   ──────────────────────────────────────────── */
+if (FINE && !RM) {
+  const TRAIL_LEN = 14;
+  const trail = [];
+  let mx = innerWidth / 2, my = innerHeight / 2;
+
+  for (let i = 0; i < TRAIL_LEN; i++) {
+    const d = document.createElement('div');
+    d.className = 'trail';
+    document.body.appendChild(d);
+    trail.push({ el: d, x: mx, y: my });
+  }
+
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+
+  (function loop() {
+    let px = mx, py = my;
+    trail.forEach((t, i) => {
+      t.x += (px - t.x) * (0.35 - i * 0.015);
+      t.y += (py - t.y) * (0.35 - i * 0.015);
+      const scale = 1 - i / TRAIL_LEN;
+      t.el.style.transform = 'translate3d(' + (t.x - 3) + 'px,' + (t.y - 3) + 'px,0) scale(' + scale + ')';
+      t.el.style.opacity = String((1 - i / TRAIL_LEN) * 0.7);
+      px = t.x; py = t.y;
+    });
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ────────────────────────────────────────────
+   8. МАГНИТНЫЕ КНОПКИ + RIPPLE
+   ──────────────────────────────────────────── */
+if (FINE && !RM) {
+  $$('.btn').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      if (el.classList.contains('runaway')) return;
+      el.style.transform = 'translate(' + (x * 0.2) + 'px,' + (y * 0.3) + 'px) translateY(-2px)';
+    });
+    el.addEventListener('mouseleave', () => {
+      if (!el.classList.contains('runaway')) el.style.transform = '';
+    });
+  });
+}
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.btn');
+  if (!btn || RM) return;
+  const r = btn.getBoundingClientRect();
+  const s = document.createElement('span');
+  s.className = 'btn__ripple';
+  s.style.left = (e.clientX - r.left) + 'px';
+  s.style.top  = (e.clientY - r.top) + 'px';
+  btn.appendChild(s);
+  setTimeout(() => s.remove(), 720);
+});
+
+/* ────────────────────────────────────────────
+   9. STAT-КАРТОЧКИ: подсветка под курсором
+   ──────────────────────────────────────────── */
+if (FINE) {
+  $$('.stat').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    }, { passive: true });
+  });
+}
+
+/* ────────────────────────────────────────────
+   10. GLITCH НА HERO (редко)
+   ──────────────────────────────────────────── */
+const heroTitle = $('#heroTitle');
+if (heroTitle && !RM) {
+  setInterval(() => {
+    if (document.hidden) return;
+    heroTitle.classList.add('is-glitch');
+    setTimeout(() => heroTitle.classList.remove('is-glitch'), 380);
+  }, 6500);
+}
+
+/* Клик по заголовку — мини-глитч */
+heroTitle?.addEventListener('click', () => {
+  heroTitle.classList.add('is-glitch');
+  setTimeout(() => heroTitle.classList.remove('is-glitch'), 380);
+  spawnToast('hero');
+});
+
+/* ────────────────────────────────────────────
+   11. ТОСТЫ — рандомные мемные уведомления
+   ──────────────────────────────────────────── */
+const TOASTS = [
+  { emoji:'📚', text:'Не забудь про лабу. Она не забудет про тебя.', src:'система' },
+  { emoji:'👨‍🏫', text:'Препод идёт. Прячь телефон.', src:'оповещение' },
+  { emoji:'⚠️', text:'Обнаружен долг по матану. Примите меры.', src:'деканат' },
+  { emoji:'🔌', text:'Удлинитель у Матвея. Всегда был у Матвея.', src:'402 каб.' },
+  { emoji:'☕', text:'Кофе кончился. Ситуация критическая.', src:'автомат, 3 этаж' },
+  { emoji:'🖊️', text:'Кто взял маркер? Верни. Мы всё видим.', src:'аноним' },
+  { emoji:'📅', text:'Дедлайн перенесли. (нет)', src:'система' },
+  { emoji:'🍀', text:'Халява близко. Держитесь.', src:'примета' },
+  { emoji:'🧠', text:'Спиши у соседа. Он умный.', src:'совет' },
+  { emoji:'🎓', text:'Диплом сам себя не напишет. Но мы попробуем.', src:'напоминание' },
+  { emoji:'💻', text:'git push --force — так себе идея.', src:'опыт' },
+  { emoji:'🚀', text:'Дедлайн через 3 часа. Ты справишься.', src:'мотивация' },
+  { emoji:'😴', text:'Пара была в 8:30. Ты её проспал.', src:'факт' },
+  { emoji:'🍕', text:'Есть идея заказать пиццу в 402.', src:'групповой чат' },
+  { emoji:'🐛', text:'Это не баг, это фича. Так и запишем.', src:'тех. документация' },
+  { emoji:'🎮', text:'Ещё одна катка и точно спать. (нет)', src:'Толя' },
+  { emoji:'📱', text:'Староста звонит. Взять или притвориться мёртвым?', src:'входящий' },
+  { emoji:'🎉', text:'Пятница. Это уже победа.', src:'календарь' },
+];
+
+const toastContainer = $('#toasts');
+const recentToasts = [];
+
+function spawnToast(customKey) {
+  if (!toastContainer) return;
+  let item;
+  if (typeof customKey === 'object' && customKey !== null) {
+    item = customKey;
+  } else if (typeof customKey === 'string' && customKey === 'hero') {
+    item = { emoji:'👋', text:'Привет. Ты нажал на название группы.', src:'easter egg' };
+  } else {
+    // избегаем последних 5
+    let tries = 0;
+    do { item = TOASTS[(Math.random() * TOASTS.length) | 0]; tries++; }
+    while (recentToasts.includes(item.text) && tries < 10);
+  }
+
+  recentToasts.push(item.text);
+  if (recentToasts.length > 5) recentToasts.shift();
+
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML =
+    '<span class="toast__emoji">' + item.emoji + '</span>' +
+    '<span class="toast__body">' + item.text +
+    '<span class="toast__src">' + item.src + '</span></span>';
+  toastContainer.appendChild(el);
+
+  const close = () => {
+    el.classList.add('is-out');
+    setTimeout(() => el.remove(), 400);
+  };
+  el.addEventListener('click', close);
+
+  // авто-закрытие
+  setTimeout(close, 4500 + Math.random() * 2000);
+
+  // не больше 4 одновременно
+  const all = $$('.toast', toastContainer);
+  if (all.length > 4) all[0].click();
+}
+
+/* Периодические тосты */
+if (!RM) {
+  const scheduleNext = () => {
+    const delay = 12000 + Math.random() * 18000;
+    setTimeout(() => {
+      if (!document.hidden) spawnToast();
+      scheduleNext();
+    }, delay);
+  };
+  setTimeout(scheduleNext, 8000);
+}
+
+/* Первый через 4 секунды после загрузки */
+setTimeout(() => spawnToast({
+  emoji:'👀', text:'Добро пожаловать в ИС-423.', src:'система'
+}), 4000);
+
+/* ────────────────────────────────────────────
+   12. ПАНА-КНОПКА
+   ──────────────────────────────────────────── */
+$('#panicBtn')?.addEventListener('click', () => {
+  const panicLines = [
+    { emoji:'🚨', text:'ВСЕ НА ПАРУ! ПРЕПОД ИДЁТ!', src:'СРОЧНО' },
+    { emoji:'😱', text:'ЗАКРЫВАЙ ЛАБУ!', src:'СРОЧНО' },
+    { emoji:'📢', text:'СТРОЙСЯ У АУДИТОРИИ 402!', src:'СРОЧНО' },
+    { emoji:'🏃', text:'БЕГИ!', src:'СРОЧНО' },
+    { emoji:'📝', text:'ЖУРНАЛ НА СТОЛЕ, Я ВСЁ ВИЖУ.', src:'ЗАВ. КАФ.' },
+  ];
+  panicLines.forEach((p, i) => {
+    setTimeout(() => spawnToast(p), i * 300);
+  });
+  // вибрация если поддерживается
+  if (navigator.vibrate) navigator.vibrate([60, 40, 60, 40, 120]);
+});
+
+/* ────────────────────────────────────────────
+   13. КНОПКА «НЕ НАЖИМАТЬ» — убегает от курсора
+   ──────────────────────────────────────────── */
+(function runaway() {
+  const btn = $('#runawayBtn');
+  if (!btn || !FINE || RM) return;
+  const stage = btn.parentElement;
+
+  btn.addEventListener('mouseenter', () => {
+    const r = btn.getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+    const maxX = sr.width - r.width;
+    const maxY = sr.height - r.height;
+    // смещение внутри родителя
+    btn.style.transform = 'translate(' +
+      ((Math.random() - 0.5) * maxX * 0.6) + 'px,' +
+      ((Math.random() - 0.5) * maxY * 0.4) + 'px)';
+  });
+
+  let clickCount = 0;
+  btn.addEventListener('click', () => {
+    clickCount++;
+    const phrases = [
+      'Я же просил.',
+      'Ладно.',
+      'Ты настойчивый.',
+      'ОК, поздравляю.',
+      'Ты нашёл секретную кнопку.',
+      'Ничего не произошло.',
+      'Ладно, произошло.',
+    ];
+    spawnToast({
+      emoji:'🎁',
+      text: phrases[Math.min(clickCount - 1, phrases.length - 1)],
+      src: 'клик #' + clickCount
+    });
+  });
+})();
+
+/* ────────────────────────────────────────────
+   14. COMIC SANS РЕЖИМ
+   ──────────────────────────────────────────── */
+$('#comicBtn')?.addEventListener('click', e => {
+  document.body.classList.toggle('comic');
+  e.currentTarget.classList.toggle('is-on');
+  const on = document.body.classList.contains('comic');
+  spawnToast({
+    emoji: on ? '🤡' : '🎩',
+    text: on ? 'Включён режим Comic Sans. Так и надо.' : 'Comic Sans выключен. Скучно.',
+    src: 'настройки'
+  });
+});
+
+/* ────────────────────────────────────────────
+   15. KONAMI CODE → секретное сообщение
+   ──────────────────────────────────────────── */
+(function konami() {
+  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let idx = 0;
+  window.addEventListener('keydown', e => {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === seq[idx]) {
+      idx++;
+      if (idx === seq.length) {
+        idx = 0;
+        spawnToast({
+          emoji:'🎮',
+          text:'↑↑↓↓←→←→BA — секрет активирован. Ты легенда.',
+          src: 'konami code'
+        });
+        document.body.style.animation = 'glitch 1s 2';
+        setTimeout(() => document.body.style.animation = '', 2000);
+      }
+    } else {
+      idx = 0;
+    }
+  });
+})();
+
+/* ────────────────────────────────────────────
+   16. HERO — невидимый счётчик кликов
+   ──────────────────────────────────────────── */
+(function logoClicks() {
+  const logo = $('#logo');
+  if (!logo) return;
+  let clicks = 0;
+  let timer = null;
+  logo.addEventListener('click', e => {
+    e.preventDefault();
+    clicks++;
+    clearTimeout(timer);
+    timer = setTimeout(() => { clicks = 0; }, 1500);
+
+    if (clicks === 5) {
+      spawnToast({
+        emoji:'🥇',
+        text:'Нажал 5 раз. Настойчивость — наше всё.',
+        src: 'easter egg'
+      });
+    }
+    if (clicks === 10) {
+      spawnToast({
+        emoji:'🏆',
+        text:'10 раз. Уважение. Учись, остальные.',
+        src: 'easter egg'
+      });
+    }
+    document.getElementById('hero')?.scrollIntoView({ behavior:'smooth' });
+  });
+})();
+
+/* ────────────────────────────────────────────
+   17. КОНФЕТТИ
+   ──────────────────────────────────────────── */
+(function confetti() {
+  const canvas = $('#confetti');
+  if (!canvas || RM) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  let parts = [], running = false;
+
+  function resize() {
+    canvas.width = innerWidth * dpr;
+    canvas.height = innerHeight * dpr;
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  addEventListener('resize', resize, { passive: true });
+
+  const COLORS = ['#ff4d1f', '#f0efe9', '#e8e6df', '#00ff9d', '#a0a0a2'];
+
+  function burst(x, y, n) {
+    n = n || 140;
+    for (let i = 0; i < n; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const spd = Math.random() * 10 + 3;
+      parts.push({
+        x, y,
+        vx: Math.cos(ang) * spd,
+        vy: Math.sin(ang) * spd - 5,
+        w: Math.random() * 7 + 3,
+        h: Math.random() * 4 + 2,
+        rot: Math.random() * Math.PI,
+        vr: (Math.random() - 0.5) * 0.32,
+        color: COLORS[(Math.random() * COLORS.length) | 0],
+        life: 1,
+      });
+    }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.vy += 0.3;
+      p.vx *= 0.992;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.life -= 0.006;
+      if (p.y > innerHeight + 60 || p.life <= 0) { parts.splice(i, 1); continue; }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = clamp(p.life, 0, 1);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    if (parts.length) requestAnimationFrame(tick);
+    else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+  }
+
+  let likeClicks = 0;
+  const likePhrases = [
+    'Пятёрка! Так и знали.',
+    'Ещё раз? Ладно, ещё пятёрка.',
+    'Ты щедрый. Спасибо.',
+    'Дневник уже полон пятёрок.',
+    'Ок, хватит. Мы и так знаем, что молодцы.',
+  ];
+
+  $('#likeBtn')?.addEventListener('click', e => {
+    const r = e.currentTarget.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 150);
+    setTimeout(() => burst(innerWidth * 0.2, innerHeight * 0.4, 60), 180);
+    setTimeout(() => burst(innerWidth * 0.8, innerHeight * 0.4, 60), 340);
+
+    spawnToast({
+      emoji:'⭐',
+      text: likePhrases[Math.min(likeClicks, likePhrases.length - 1)],
+      src: 'оценка #' + (likeClicks + 1)
+    });
+    likeClicks++;
+  });
+})();
+
+/* ────────────────────────────────────────────
+   18. QR-код — декоративная заглушка
+   ──────────────────────────────────────────── */
+(function drawQR() {
+  const canvas = $('#qr');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const SIZE = 200, MODULES = 25, cell = SIZE / MODULES;
+
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, SIZE, SIZE);
+  ctx.fillStyle = '#0a0a0b';
+
+  let seed = 20260624;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
+  const inFinder = (r, c) => {
+    const inBox = (r0, c0) => r >= r0 && r < r0 + 7 && c >= c0 && c < c0 + 7;
+    return inBox(0, 0) || inBox(0, MODULES - 7) || inBox(MODULES - 7, 0);
+  };
+  for (let r = 0; r < MODULES; r++) {
+    for (let c = 0; c < MODULES; c++) {
+      if (inFinder(r, c)) continue;
+      if (rnd() > 0.52) ctx.fillRect(c * cell, r * cell, cell * 0.94, cell * 0.94);
+    }
+  }
+  const drawFinder = (r0, c0) => {
+    ctx.fillStyle = '#0a0a0b';
+    ctx.fillRect(c0 * cell, r0 * cell, cell * 7, cell * 7);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect((c0 + 1) * cell, (r0 + 1) * cell, cell * 5, cell * 5);
+    ctx.fillStyle = '#0a0a0b';
+    ctx.fillRect((c0 + 2) * cell, (r0 + 2) * cell, cell * 3, cell * 3);
+  };
+  drawFinder(0, 0);
+  drawFinder(0, MODULES - 7);
+  drawFinder(MODULES - 7, 0);
+
+  /* клик по QR — тост */
+  canvas.addEventListener('click', () => {
+    spawnToast({
+      emoji:'📱',
+      text:'Сканируй. Или не сканируй. Тут QR-заглушка.',
+      src: 'qr'
+    });
+  });
+})();
+
+})();
+</script>
+
+<!--
+═══════════════════════════════════════════════════════════════════
+  КАК МЕНЯТЬ КОНТЕНТ
+═══════════════════════════════════════════════════════════════════
+
+  1. НАЗВАНИЕ ГРУППЫ
+     • <title> и og:title в <head>
+     • <h1 class="hero__title" id="heroTitle"> — «ИС-423»
+     • <a class="logo" href="#hero" id="logo">ИС-423</a>
+     • Текст в .hero__top и .credits в финале.
+
+  2. ФАКТЫ (секция #facts)
+     • Каждый факт — <article class="fact-card"> с номером,
+       именем и текстом. Копируй блок и меняй содержимое.
+
+  3. ДОСТИЖЕНИЯ (секция #stats, ниже цифр)
+     • Блок .achieve — список строк .achieve__item.
+       Формат: idx (номер), text (что), tag (категория).
+       Копируй строку и меняй.
+
+  4. ХРОНИКА (секция #timeline)
+     • Каждое событие — <div class="tl-item"> с .tl-date,
+       .tl-title, .tl-text.
+
+  5. ЦИФРЫ (секция #stats)
+     • Карточки .stat: <span data-count="33">0</span> — число
+       «набегает» при появлении. Меняй data-count.
+     • .stat__hint — подпись, которая появляется при наведении.
+
+  6. ПРИКОЛЫ (секция #memes)
+     • Каждый прикол — <article class="meme">. Копируй и меняй.
+
+  7. ТОСТЫ (всплывающие уведомления)
+     • Массив TOASTS в JS (раздел 11). Формат:
+       { emoji, text, src }.
+       Добавляй свои фразы — они будут всплывать случайно.
+
+  8. ПАНА-КНОПКА (внизу слева)
+     • Раздел 12 в JS. Массив panicLines.
+
+  9. KONAMI CODE
+     • ↑↑↓↓←→←→BA — активирует тост + глитч.
+       Раздел 15 в JS.
+
+ 10. СЕКРЕТНЫЕ КЛИКИ
+     • Клик по заголовку "ИС-423" → тост.
+     • Клик по логотипу 5 раз / 10 раз → разные тосты.
+     • Кнопка "Не нажимать" → убегает и даёт фразы.
+     • Кнопка "comic" в хедере → Comic Sans режим.
+     • Кнопка "Оценить на 5" → конфетти + тост (много раз).
+     • QR-код кликабельный → тост.
+
+ 11. ЦВЕТА
+     • Всё в :root вверху <style>: --accent (сейчас #ff4d1f),
+       --neon (сейчас #00ff9d), --bg, --panel, --text, --muted.
+
+ 12. ФОН (звёздный тоннель)
+     • Раздел 3 в JS. Количество звёзд: N (180 мобилка / 360 деск).
+     • Скорость зависит от скролла + инерции.
+     • Отключается при prefers-reduced-motion.
+
+═══════════════════════════════════════════════════════════════════
+  КАК ЗАЛИТЬ НА GITHUB PAGES
+═══════════════════════════════════════════════════════════════════
+
+  Вариант 1 — репозиторий как отдельный сайт (например, /is423/)
+
+  1. Создай репозиторий на github.com (например, is423).
+  2. Положи в него файл index.html (этот файл, переименуй как есть).
+  3. Опционально: добавь пустой файл .nojekyll — чтобы GitHub
+     не пытался обрабатывать папки через Jekyll. Не обязательно
+     для чистого HTML, но безопаснее.
+  4. В терминале:
+       git init
+       git add index.html .nojekyll
+       git commit -m "init"
+       git branch -M main
+       git remote add origin https://github.com/ЛОГИН/is423.git
+       git push -u origin main
+  5. На GitHub: Settings → Pages → Source: Deploy from a branch,
+     Branch: main, Folder: / (root). Save.
+  6. Через 1–2 минуты сайт будет на:
+       https://ЛОГИН.github.io/is423/
+
+  Вариант 2 — личный сайт (root): https://ЛОГИН.github.io
+
+  1. Создай репозиторий с именем ЛОГИН.github.io
+  2. Положи в него index.html.
+  3. Пуш в main.
+  4. Сразу откроется по адресу https://ЛОГИН.github.io
+
+  Важно:
+  • Всё работает как есть — файл один, пути относительные,
+    никаких внешних JS-библиотек нет.
+  • Google Fonts подгружаются по сети. Если нужен полный
+    офлайн — скачай шрифты и подключи локально через @font-face.
+  • GitHub Pages отдаёт файлы по HTTPS, всё работает.
+
+═══════════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
